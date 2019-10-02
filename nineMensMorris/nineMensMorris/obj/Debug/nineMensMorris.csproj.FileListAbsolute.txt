@@ -1,0 +1,9 @@
+C:\Users\Owner\Documents\Programming\CSharp\nineMensMorris\nineMensMorris\bin\Debug\nineMensMorris.exe.config
+C:\Users\Owner\Documents\Programming\CSharp\nineMensMorris\nineMensMorris\bin\Debug\nineMensMorris.exe
+C:\Users\Owner\Documents\Programming\CSharp\nineMensMorris\nineMensMorris\bin\Debug\nineMensMorris.pdb
+C:\Users\Owner\Documents\Programming\CSharp\nineMensMorris\nineMensMorris\obj\Debug\nineMensMorris.csprojAssemblyReference.cache
+C:\Users\Owner\Documents\Programming\CSharp\nineMensMorris\nineMensMorris\obj\Debug\nineMensMorris.Properties.Resources.resources
+C:\Users\Owner\Documents\Programming\CSharp\nineMensMorris\nineMensMorris\obj\Debug\nineMensMorris.csproj.GenerateResource.cache
+C:\Users\Owner\Documents\Programming\CSharp\nineMensMorris\nineMensMorris\obj\Debug\nineMensMorris.exe
+C:\Users\Owner\Documents\Programming\CSharp\nineMensMorris\nineMensMorris\obj\Debug\nineMensMorris.pdb
+C:\Users\Owner\Documents\Programming\CSharp\nineMensMorris\nineMensMorris\obj\Debug\nineMensMorris.Board.resources
