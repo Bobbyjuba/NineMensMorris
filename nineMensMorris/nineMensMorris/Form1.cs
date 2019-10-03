@@ -36,6 +36,8 @@ namespace nineMensMorris
         }
 
         private void NewGameToolStripMenuItem_Click(object sender, EventArgs e) {
+            // Loop through all controls, and re-enable any button that isn't enabled
+            // Set each button to its neutral color
             foreach (Control s in ActiveForm.Controls) {
                 Button b = s as Button;
 
@@ -45,18 +47,21 @@ namespace nineMensMorris
                 }
             }
 
-
+            // Reset boardArray
             for (int i = 0; i < 24; i++)
                 boardArray[i] = 0;
 
+            // Reset game variables
             player1_tokens = 9;
             player2_tokens = 9;
             phase = true;
             turn = true;
 
+            // Reset the counters for each player's token
             p1Tokens.Text = player1_tokens.ToString();
             p2Tokens.Text = player2_tokens.ToString();
 
+            // Reset the game dialogue box, then inform user the game is reset
             textBox15.ResetText();
             textBox15.AppendText("Phase 1, Placement");
             textBox15.AppendText(Environment.NewLine);
