@@ -7,3 +7,13 @@ C:\Users\Owner\Documents\Programming\CSharp\nineMensMorris\nineMensMorris\obj\De
 C:\Users\Owner\Documents\Programming\CSharp\nineMensMorris\nineMensMorris\obj\Debug\nineMensMorris.exe
 C:\Users\Owner\Documents\Programming\CSharp\nineMensMorris\nineMensMorris\obj\Debug\nineMensMorris.pdb
 C:\Users\Owner\Documents\Programming\CSharp\nineMensMorris\nineMensMorris\obj\Debug\nineMensMorris.Board.resources
+C:\Users\Bobby\Documents\Visual Studio 2019\Projects\nineMensMorris\nineMensMorris\obj\Debug\nineMensMorris.csprojAssemblyReference.cache
+C:\Users\Bobby\Documents\Visual Studio 2019\Projects\nineMensMorris\nineMensMorris\obj\Debug\nineMensMorris.exe
+C:\Users\Bobby\Documents\Visual Studio 2019\Projects\nineMensMorris\nineMensMorris\obj\Debug\nineMensMorris.pdb
+C:\Users\Bobby\Documents\Visual Studio 2019\Projects\nineMensMorris\nineMensMorris\bin\Debug\nineMensMorris.exe.config
+C:\Users\Bobby\Documents\Visual Studio 2019\Projects\nineMensMorris\nineMensMorris\bin\Debug\nineMensMorris.exe
+C:\Users\Bobby\Documents\Visual Studio 2019\Projects\nineMensMorris\nineMensMorris\bin\Debug\nineMensMorris.pdb
+C:\Users\Bobby\Documents\Visual Studio 2019\Projects\nineMensMorris\nineMensMorris\obj\Debug\nineMensMorris.Board.resources
+C:\Users\Bobby\Documents\Visual Studio 2019\Projects\nineMensMorris\nineMensMorris\obj\Debug\nineMensMorris.Properties.Resources.resources
+C:\Users\Bobby\Documents\Visual Studio 2019\Projects\nineMensMorris\nineMensMorris\obj\Debug\nineMensMorris.csproj.GenerateResource.cache
+C:\Users\Bobby\Documents\Visual Studio 2019\Projects\nineMensMorris\nineMensMorris\obj\Debug\nineMensMorris.csproj.CoreCompileInputs.cache
