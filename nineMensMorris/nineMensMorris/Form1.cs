@@ -105,8 +105,15 @@ namespace nineMensMorris
                             millArray[b] = player;
                             millArray[c] = player;
                             delete = player;
-                            textBox15.AppendText(Environment.NewLine);
-                            textBox15.AppendText("Player " + player + " has formed a mill. Select a blue piece to remove.");
+                            if (player == 1) {
+                                textBox15.AppendText(Environment.NewLine);
+                                textBox15.AppendText("Player " + player + " has formed a mill. Select a blue piece to remove.");
+                            }
+
+                            else if (player == 2) {
+                                textBox15.AppendText(Environment.NewLine);
+                                textBox15.AppendText("Player " + player + " has formed a mill. Select a red piece to remove.");
+                            }
                         }
                     }
                 }
