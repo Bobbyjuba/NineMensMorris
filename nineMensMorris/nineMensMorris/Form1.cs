@@ -15,6 +15,7 @@ namespace nineMensMorris
         String test = "";
         bool phase = true; //When true it is the placement phase, when false it is the movement phase.
         bool turn = true; //When true it is player 1's turn, when false it is player 2's turn.
+        bool select = true; //When true, select a piece to move, when false select the desitnation
         int delete = 0;
         int player1_tokens = 9;
         int player2_tokens = 9;
@@ -50,7 +51,7 @@ namespace nineMensMorris
             textBox15.AppendText("Player 1's Turn");
         }
         private void rulesToolStripMenuItem_Click(object sender, EventArgs e) {
-            MessageBox.Show("By: Mark Ekis\nBrian Roden\nSungho Lee\nRaymond Rennock", "Creators");
+            MessageBox.Show("Mark Ekis\nBrian Roden\nSungho Lee\nRaymond Rennock", "Creators");
         }
 
         private void NewGameToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -91,56 +92,36 @@ namespace nineMensMorris
             Application.Exit();
         }
 
-        private void millPlayerOne(int head) {
+        private void mill(int head, int player) {
             for (int i = 0; i < matrix.Length; i++) {
                 int a = matrix[i][0];
                 int b = matrix[i][1];
                 int c = matrix[i][2];
 
                 if (a == head || b == head || c == head) {
-                    if (boardArray[a] == 1 && boardArray[b] == 1 && boardArray[c] == 1) {
-                        if (millArray[a] != 1 || millArray[b] != 1 || millArray[c] != 1) {
-                            millArray[a] = 1;
-                            millArray[b] = 1;
-                            millArray[c] = 1;
-                            delete = 1;
+                    if (boardArray[a] == player && boardArray[b] == player && boardArray[c] == player) {
+                        if (millArray[a] != player || millArray[b] != player || millArray[c] != player) {
+                            millArray[a] = player;
+                            millArray[b] = player;
+                            millArray[c] = player;
+                            delete = player;
                             textBox15.AppendText(Environment.NewLine);
-                            textBox15.AppendText("Player 1 has formed a mill. Select a blue piece to remove.");
+                            textBox15.AppendText("Player " + player + " has formed a mill. Select a blue piece to remove.");
                         }
                     }
                 }
             }
         }
 
-        private void millPlayerTwo(int head) {
-            for (int i = 0; i < matrix.Length; i++) {
-                int a = matrix[i][0];
-                int b = matrix[i][1];
-                int c = matrix[i][2];
-
-                if (a == head || b == head || c == head) {
-                    if (boardArray[a] == 2 && boardArray[b] == 2 && boardArray[c] == 2) {
-                        if (millArray[a] != 2 || millArray[b] != 2 || millArray[c] != 2) {
-                            millArray[a] = 2;
-                            millArray[b] = 2;
-                            millArray[c] = 2;
-                            delete = 2;
-                            textBox15.AppendText(Environment.NewLine);
-                            textBox15.AppendText("Player 2 has formed a mill. Select an orange piece to remove.");
-                        }
-                    }
-                }
-            }
-        }
         private void millDetection() {
             for (int i = 1; i < 25; i++) {
                 if (boardArray[i] == 1)
-                    millPlayerOne(i);
+                    mill(i,1);
             }
 
             for (int i = 1; i < 25; i++) {
                 if (boardArray[i] == 2)
-                    millPlayerTwo(i);
+                    mill(i,2);
             }
 
             test = "";
@@ -151,6 +132,11 @@ namespace nineMensMorris
 
             for (int i = 1; i < boardArray.Length; i++)
                 test += Convert.ToString(boardArray[i] + ", ");
+
+            test += "\n";
+            test += "Player Turn: ";
+            if (turn) { test += 1; }
+            else { test += 2; }
         }
 
         private void delete_piece(Button deleteButton, int head) {
@@ -174,11 +160,37 @@ namespace nineMensMorris
             millDetection();
         }
 
+        private void checkPhase()
+        {
+            if (phase == true && player1_tokens <= 0 && player2_tokens <= 0)
+            {
+                phase = false;
+                delete = 0;
+                turn = true;
+                textBox15.AppendText(Environment.NewLine);
+                textBox15.AppendText("Begining Phase 2, Movement");
+                foreach (Control c in this.Controls)
+                {
+                    if (c is Button)
+                    {
+                        if (c.BackColor != Color.OrangeRed) { c.Enabled = false; }
+                        else { c.Enabled = true; }
+                    }
+                }
+            }
+        }
+
+        private void displayMillsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            millDetection();
+            MessageBox.Show(test);
+        }
+
         private void button_click(object sender, EventArgs e) { 
-            while (delete == 0) {
+            if (delete == 0) {
                 // If player 1 selects an empty piece, then that index in boardArray becomes 1
                 // If player 2 selects an empty piece, then that index in boardArray becomes 2
-                if (phase == true && player2_tokens > 0) {
+                if (phase == true) {
                     Button b = (Button)sender;
                     if (turn) {
                         b.BackColor = Color.OrangeRed;
@@ -190,7 +202,6 @@ namespace nineMensMorris
                             textBox15.AppendText(Environment.NewLine);
                             textBox15.AppendText("Player 2's Turn");
                         }
-
                     }
                     else {
                         b.BackColor = Color.Aqua;
@@ -205,14 +216,57 @@ namespace nineMensMorris
                     }
                     turn = !turn;
                     b.Enabled = false;
-                    break;
-                }
-                if (phase == true && player1_tokens <= 0 && player2_tokens <= 0) {
-                    phase = false;
-                    textBox15.AppendText(Environment.NewLine);
-                    textBox15.AppendText("Begining Phase 2, Movement");
-                }
+                    checkPhase();
 
+                }
+                else //Movement phase begins here
+                {
+                    Button b = (Button)sender;
+                    if (turn) // Player 1 turn
+                    {
+                        if (select == true) // Selection Phase
+                        {
+                            foreach (Control c in this.Controls)
+                            {
+                                if (c is Button)
+                                {
+                                    if (c.BackColor != Color.OrangeRed) { c.Enabled = false; }
+                                    else { c.Enabled = true; }
+                                }
+                            }
+
+                            b.BackColor = Color.Green;
+
+                            foreach (Control d in this.Controls)
+                            {
+                                if (d is Button)
+                                {
+                                    if (d.BackColor != Color.Khaki || d.BackColor != Color.Green) { d.Enabled = false; }
+                                    else { d.Enabled = true; }
+                                }
+                            }
+                            select = false;
+                        }
+
+                        else // Moevement Phase
+                        {
+                            b.BackColor = Color.Yellow;
+                            select = true;
+                        }
+
+
+                    }
+                    else // Player 2 turn
+                    {
+
+
+
+                    }
+
+
+
+
+                }
             }
 
             if (delete == 1) {
@@ -336,8 +390,5 @@ namespace nineMensMorris
             }
         }
 
-        private void displayMillsToolStripMenuItem_Click(object sender, EventArgs e) {
-            MessageBox.Show(test);
-        }
     }  
 }
