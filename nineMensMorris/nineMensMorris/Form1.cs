@@ -86,12 +86,12 @@ namespace nineMensMorris {
             new int[] { 5, 10 },
             new int[] { 8, 10 },
             new int[] { 9, 11 },
-            new int[] { 6, 11 }, 
-            new int[] { 3, 11 }, 
+            new int[] { 6, 11 },
+            new int[] { 3, 11 },
             new int[] { 8, 12 },
             new int[] { 12, 13 },
             new int[] { 9, 12 },
-            new int[] { 5, 14 }, 
+            new int[] { 5, 14 },
             new int[] { 13, 14 },
             new int[] { 6, 14 },
             new int[] { 1, 15 },
@@ -124,7 +124,7 @@ namespace nineMensMorris {
             }
 
             // Reset boardArray
-            for (int i = 0; i < 24; i++)
+            for (int i = 0; i < 25; i++)
                 boardArray[i] = 0;
 
             // Reset game variables
@@ -187,9 +187,9 @@ namespace nineMensMorris {
                 }
             }
             else if (boardArray[a] == player && boardArray[b] == player && boardArray[c] == player) {
-                    millArray[a] = player;
-                    millArray[b] = player;
-                    millArray[c] = player;
+                millArray[a] = player;
+                millArray[b] = player;
+                millArray[c] = player;
 
                 if (head == clicked) {
                     delete = player;
@@ -373,7 +373,7 @@ namespace nineMensMorris {
                     checkPhase();
 
                 }
-                else //Movement phase begins here
+                else // Movement phase begins here
                 {
                     Button b = (Button)sender;
                     if (turn) // Player 1 turn
@@ -416,6 +416,78 @@ namespace nineMensMorris {
                                 turn = false;
                                 select = true;
 
+                                // When a piece has been moved, we need to check if the other player can move a piece
+                                // If player 1 has more current tokens, it is likely that they are in a position to win
+                                if (p1_currentTokens > p2_currentTokens) {
+                                    bool foundOpenSpot = false; // Use this bool to check if we have an open spot
+
+                                    foreach (Control s in ActiveForm.Controls) {
+                                        if (foundOpenSpot == false) {
+                                            Button c = s as Button;
+
+                                            if (c != null) {
+                                                if (c.BackColor == Color.Aqua) { // We are only iterating through the player 2 buttons 
+                                                    for (int i = 0; i < adjacency[c.TabIndex].Length; i++) {
+                                                        if (boardArray[adjacency[c.TabIndex][i]] == 0) {
+                                                            foundOpenSpot = true; // If we find an open spot next to a player 2 button, then the game isn't over
+                                                            break; // Break from the loop and end the current search for an open space
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    // If we didn't find an open space, then that means whoever has less tokens has lost
+                                    if (foundOpenSpot == false) {
+                                        foreach (Control s in ActiveForm.Controls) {
+                                            Button c = s as Button;
+
+                                            if (c != null) {
+                                                c.Enabled = false;
+                                            }
+                                        }
+
+                                        MessageBox.Show("Player 1 has won the game!");
+                                        return;
+                                    }
+                                }
+
+                                // Now we do the same search but for the case when player 2 has more tokens than player 1
+                                if (p2_currentTokens > p1_currentTokens) {
+                                    bool foundOpenSpot = false;
+
+                                    foreach (Control s in ActiveForm.Controls) {
+                                        if (foundOpenSpot == false) {
+                                            Button c = s as Button;
+
+                                            if (c != null) {
+                                                if (c.BackColor == Color.OrangeRed) { // Iterate through player 1 buttons
+                                                    for (int i = 0; i < adjacency[c.TabIndex].Length; i++) {
+                                                        if (boardArray[adjacency[c.TabIndex][i]] == 0) {
+                                                            foundOpenSpot = true;
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    if (foundOpenSpot == false) {
+                                        foreach (Control s in ActiveForm.Controls) {
+                                            Button c = s as Button;
+
+                                            if (c != null) {
+                                                c.Enabled = false;
+                                            }
+                                        }
+
+                                        MessageBox.Show("Player 2 has won the game!");
+                                        return;
+                                    }
+                                }
+
                                 enableButtons(2);
                             }
 
@@ -423,15 +495,11 @@ namespace nineMensMorris {
                                 b.BackColor = Color.OrangeRed;
                                 selectedButton = null;
                                 select = true;
-
                                 enableButtons(1);
                             }
-
-
                         }
-
-
                     }
+
                     else // Player 2 turn
                     {
                         delete = 0;
@@ -474,6 +542,75 @@ namespace nineMensMorris {
                                     turn = true;
                                     select = true;
 
+                                    // We must do all the same checks as before, but now do the checks whenever player 2 moves a piece
+                                    if (p1_currentTokens > p2_currentTokens) {
+                                        bool foundOpenSpot = false;
+
+                                        foreach (Control s in ActiveForm.Controls) {
+                                            if (foundOpenSpot == false) {
+                                                Button c = s as Button;
+
+                                                if (c != null) {
+                                                    if (c.BackColor == Color.Aqua) {
+                                                        for (int i = 0; i < adjacency[c.TabIndex].Length; i++) {
+                                                            if (boardArray[adjacency[c.TabIndex][i]] == 0) {
+                                                                foundOpenSpot = true;
+                                                                break;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        if (foundOpenSpot == false) {
+                                            foreach (Control s in ActiveForm.Controls) {
+                                                Button c = s as Button;
+
+                                                if (c != null) {
+                                                    c.Enabled = false;
+                                                }
+                                            }
+
+                                            MessageBox.Show("Player 1 has won the game!");
+                                            return;
+                                        }
+                                    }
+
+                                    if (p2_currentTokens > p1_currentTokens) {
+                                        bool foundOpenSpot = false;
+
+                                        foreach (Control s in ActiveForm.Controls) {
+                                            if (foundOpenSpot == false) {
+                                                Button c = s as Button;
+
+                                                if (c != null) {
+                                                    if (c.BackColor == Color.OrangeRed) {
+                                                        for (int i = 0; i < adjacency[c.TabIndex].Length; i++) {
+                                                            if (boardArray[adjacency[c.TabIndex][i]] == 0) {
+                                                                foundOpenSpot = true;
+                                                                break;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        if (foundOpenSpot == false) {
+                                            foreach (Control s in ActiveForm.Controls) {
+                                                Button c = s as Button;
+
+                                                if (c != null) {
+                                                    c.Enabled = false;
+                                                }
+                                            }
+
+                                            MessageBox.Show("Player 2 has won the game!");
+                                            return;
+                                        }
+                                    }
+
                                     enableButtons(1);
                                 }
 
@@ -481,47 +618,78 @@ namespace nineMensMorris {
                                     b.BackColor = Color.Aqua;
                                     selectedButton = null;
                                     select = true;
-
                                     enableButtons(2);
                                 }
 
-
+                                }
                             }
-
-
-                        }
-                    }
-
-
-
-
-                }
-            }
-
-            if (delete == 1) {
-                Button buttonToDelete = (Button)sender;
-                bool onlyMill = true;
-
-                foreach (Control s in ActiveForm.Controls) {
-                    Button b = s as Button;
-
-                    if (b != null) {
-                        if (!b.Enabled && b.BackColor == Color.Aqua) {
-                            b.Enabled = true;
                         }
                     }
                 }
 
+                if (delete == 1) {
+                    Button buttonToDelete = (Button)sender;
+                    bool onlyMill = true;
 
-                if (buttonToDelete.Enabled) {
-                    if (boardArray[buttonToDelete.TabIndex] == 2) {
-                        if (millArray[buttonToDelete.TabIndex] == 2) {
-                            for (int i = 1; i < boardArray.Length; i++) {
-                                if (boardArray[i] != millArray[i])
-                                    onlyMill = false;
+                    foreach (Control s in ActiveForm.Controls) {
+                        Button b = s as Button;
+
+                        if (b != null) {
+                            if (!b.Enabled && b.BackColor == Color.Aqua) {
+                                b.Enabled = true;
+                            }
+                        }
+                    }
+
+
+                    if (buttonToDelete.Enabled) {
+                        if (boardArray[buttonToDelete.TabIndex] == 2) {
+                            if (millArray[buttonToDelete.TabIndex] == 2) {
+                                for (int i = 1; i < boardArray.Length; i++) {
+                                    if (boardArray[i] != millArray[i])
+                                        onlyMill = false;
+                                }
+
+                                if (onlyMill == true) {
+                                    delete_piece(buttonToDelete, buttonToDelete.TabIndex);
+                                    foreach (Control s in ActiveForm.Controls) {
+                                        Button b = s as Button;
+
+                                        if (b != null) {
+                                            if (b.Enabled && b.BackColor == Color.Aqua) {
+                                                b.Enabled = false;
+                                            }
+                                        }
+                                    }
+                                    delete = 0;
+                                    p2_currentTokens--;
+                                    
+                                    // If player 2's current tokens falls below 3, they have lost
+                                    if (p2_currentTokens < 3) {
+                                        foreach (Control s in ActiveForm.Controls) {
+                                            Button b = s as Button;
+
+                                            if (b != null) {
+                                                b.Enabled = false;
+                                            }
+                                        }
+
+                                        MessageBox.Show("Player 1 has won the game!");
+                                        return;
+                                    }
+
+                                    textBox15.AppendText(Environment.NewLine);
+                                    textBox15.AppendText("Player 2's turn");
+
+                                    if (phase == false) {
+                                        enableButtons(2);
+                                    }
+
+                                }
+
                             }
 
-                            if (onlyMill == true) {
+                            else {
                                 delete_piece(buttonToDelete, buttonToDelete.TabIndex);
                                 foreach (Control s in ActiveForm.Controls) {
                                     Button b = s as Button;
@@ -532,11 +700,13 @@ namespace nineMensMorris {
                                         }
                                     }
                                 }
+
                                 delete = 0;
                                 p2_currentTokens--;
 
-                                if (p2_currentTokens < 3) {
-                                    foreach(Control s in ActiveForm.Controls) {
+                            // If player 2's current tokens falls below 3, they have lost
+                            if (p2_currentTokens < 3) {
+                                    foreach (Control s in ActiveForm.Controls) {
                                         Button b = s as Button;
 
                                         if (b != null) {
@@ -554,74 +724,74 @@ namespace nineMensMorris {
                                 if (phase == false) {
                                     enableButtons(2);
                                 }
-
-                            }
-
-                        }
-
-                        else {
-                            delete_piece(buttonToDelete, buttonToDelete.TabIndex);
-                            foreach (Control s in ActiveForm.Controls) {
-                                Button b = s as Button;
-
-                                if (b != null) {
-                                    if (b.Enabled && b.BackColor == Color.Aqua) {
-                                        b.Enabled = false;
-                                    }
-                                }
-                            }
-
-                            delete = 0;
-                            p2_currentTokens--;
-
-                            if (p2_currentTokens < 3) {
-                                foreach (Control s in ActiveForm.Controls) {
-                                    Button b = s as Button;
-
-                                    if (b != null) {
-                                        b.Enabled = false;
-                                    }
-                                }
-
-                                MessageBox.Show("Player 1 has won the game!");
-                                return;
-                            }
-
-                            textBox15.AppendText(Environment.NewLine);
-                            textBox15.AppendText("Player 2's turn");
-
-                            if (phase == false) {
-                                enableButtons(2);
                             }
                         }
                     }
                 }
-            }
 
-            if (delete == 2) {
-                Button buttonToDelete = (Button)sender;
-                bool onlyMill = true;
+                if (delete == 2) {
+                    Button buttonToDelete = (Button)sender;
+                    bool onlyMill = true;
 
-                foreach (Control s in ActiveForm.Controls) {
-                    Button b = s as Button;
+                    foreach (Control s in ActiveForm.Controls) {
+                        Button b = s as Button;
 
-                    if (b != null) {
-                        if (!b.Enabled && b.BackColor == Color.OrangeRed) {
-                            b.Enabled = true;
+                        if (b != null) {
+                            if (!b.Enabled && b.BackColor == Color.OrangeRed) {
+                                b.Enabled = true;
+                            }
                         }
                     }
-                }
 
 
-                if (buttonToDelete.Enabled) {
-                    if (boardArray[buttonToDelete.TabIndex] == 1) {
-                        if (millArray[buttonToDelete.TabIndex] == 1) {
-                            for (int i = 1; i < boardArray.Length; i++) {
-                                if (boardArray[i] != millArray[i])
-                                    onlyMill = false;
+                    if (buttonToDelete.Enabled) {
+                        if (boardArray[buttonToDelete.TabIndex] == 1) {
+                            if (millArray[buttonToDelete.TabIndex] == 1) {
+                                for (int i = 1; i < boardArray.Length; i++) {
+                                    if (boardArray[i] != millArray[i])
+                                        onlyMill = false;
+                                }
+
+                                if (onlyMill == true) {
+                                    delete_piece(buttonToDelete, buttonToDelete.TabIndex);
+                                    foreach (Control s in ActiveForm.Controls) {
+                                        Button b = s as Button;
+
+                                        if (b != null) {
+                                            if (b.Enabled && b.BackColor == Color.OrangeRed) {
+                                                b.Enabled = false;
+                                            }
+                                        }
+                                    }
+
+                                    delete = 0;
+                                    p1_currentTokens--;
+
+                                // If player 1's current tokens falls below 3, they have lost
+                                if (p1_currentTokens < 3) {
+                                        foreach (Control s in ActiveForm.Controls) {
+                                            Button b = s as Button;
+
+                                            if (b != null) {
+                                                b.Enabled = false;
+                                            }
+                                        }
+
+                                        MessageBox.Show("Player 2 has won the game!");
+                                        return;
+                                    }
+
+                                    textBox15.AppendText(Environment.NewLine);
+                                    textBox15.AppendText("Player 1's turn");
+
+                                    if (phase == false) {
+                                        enableButtons(1);
+                                    }
+                                }
+
                             }
 
-                            if (onlyMill == true) {
+                            else {
                                 delete_piece(buttonToDelete, buttonToDelete.TabIndex);
                                 foreach (Control s in ActiveForm.Controls) {
                                     Button b = s as Button;
@@ -636,7 +806,8 @@ namespace nineMensMorris {
                                 delete = 0;
                                 p1_currentTokens--;
 
-                                if (p1_currentTokens < 3) {
+                            // If player 1's current tokens falls below 3, they have lost
+                            if (p1_currentTokens < 3) {
                                     foreach (Control s in ActiveForm.Controls) {
                                         Button b = s as Button;
 
@@ -656,47 +827,9 @@ namespace nineMensMorris {
                                     enableButtons(1);
                                 }
                             }
-
-                        }
-
-                        else {
-                            delete_piece(buttonToDelete, buttonToDelete.TabIndex);
-                            foreach (Control s in ActiveForm.Controls) {
-                                Button b = s as Button;
-
-                                if (b != null) {
-                                    if (b.Enabled && b.BackColor == Color.OrangeRed) {
-                                        b.Enabled = false;
-                                    }
-                                }
-                            }
-
-                            delete = 0;
-                            p1_currentTokens--;
-
-                            if (p1_currentTokens < 3) { 
-                                foreach (Control s in ActiveForm.Controls) {
-                                    Button b = s as Button;
-
-                                    if (b != null) {
-                                        b.Enabled = false;
-                                    }
-                                }
-
-                                MessageBox.Show("Player 2 has won the game!");
-                                return;
-                            }
-
-                            textBox15.AppendText(Environment.NewLine);
-                            textBox15.AppendText("Player 1's turn");
-
-                            if (phase == false) {
-                                enableButtons(1);
-                            }
                         }
                     }
                 }
             }
         }
     }
-}
