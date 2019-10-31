@@ -35,6 +35,7 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rulesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.displayMillsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
@@ -78,7 +79,6 @@
             this.player2Tokens = new System.Windows.Forms.TextBox();
             this.p1Tokens = new System.Windows.Forms.TextBox();
             this.p2Tokens = new System.Windows.Forms.TextBox();
-            this.displayMillsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -128,9 +128,16 @@
             // rulesToolStripMenuItem
             // 
             this.rulesToolStripMenuItem.Name = "rulesToolStripMenuItem";
-            this.rulesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.rulesToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.rulesToolStripMenuItem.Text = "About";
             this.rulesToolStripMenuItem.Click += new System.EventHandler(this.rulesToolStripMenuItem_Click);
+            // 
+            // displayMillsToolStripMenuItem
+            // 
+            this.displayMillsToolStripMenuItem.Name = "displayMillsToolStripMenuItem";
+            this.displayMillsToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.displayMillsToolStripMenuItem.Text = "Display Mills";
+            this.displayMillsToolStripMenuItem.Click += new System.EventHandler(this.displayMillsToolStripMenuItem_Click);
             // 
             // button1
             // 
@@ -691,13 +698,6 @@
             this.p2Tokens.TabIndex = 41;
             this.p2Tokens.Text = "9";
             this.p2Tokens.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // displayMillsToolStripMenuItem
-            // 
-            this.displayMillsToolStripMenuItem.Name = "displayMillsToolStripMenuItem";
-            this.displayMillsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.displayMillsToolStripMenuItem.Text = "Display Mills";
-            this.displayMillsToolStripMenuItem.Click += new System.EventHandler(this.displayMillsToolStripMenuItem_Click);
             // 
             // Board
             // 
