@@ -293,6 +293,7 @@ namespace nineMensMorris {
                 turn = true;
                 textBox15.AppendText(Environment.NewLine);
                 textBox15.AppendText("Begining Phase 2, Movement");
+                textBox15.AppendText("Player 1's turn");
                 foreach (Control c in this.Controls) {
                     if (c is Button) {
                         if (c.BackColor != Color.OrangeRed) { c.Enabled = false; }
@@ -412,7 +413,10 @@ namespace nineMensMorris {
                                     }
 
                                 }
+
                                 millDetection(b.TabIndex);
+                                textBox15.AppendText(Environment.NewLine);
+                                textBox15.AppendText("Player 2's turn");
                                 turn = false;
                                 select = true;
 
@@ -539,6 +543,8 @@ namespace nineMensMorris {
 
                                     }
                                     millDetection(b.TabIndex);
+                                    textBox15.AppendText(Environment.NewLine);
+                                    textBox15.AppendText("Player 1's turn");
                                     turn = true;
                                     select = true;
 
