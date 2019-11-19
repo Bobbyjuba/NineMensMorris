@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Board));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -36,6 +37,8 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rulesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.displayMillsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.turnOnAIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
@@ -79,6 +82,8 @@
             this.player2Tokens = new System.Windows.Forms.TextBox();
             this.p1Tokens = new System.Windows.Forms.TextBox();
             this.p2Tokens = new System.Windows.Forms.TextBox();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.turnOffAIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -86,6 +91,7 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
+            this.gameToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -128,16 +134,32 @@
             // rulesToolStripMenuItem
             // 
             this.rulesToolStripMenuItem.Name = "rulesToolStripMenuItem";
-            this.rulesToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.rulesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.rulesToolStripMenuItem.Text = "About";
             this.rulesToolStripMenuItem.Click += new System.EventHandler(this.rulesToolStripMenuItem_Click);
             // 
             // displayMillsToolStripMenuItem
             // 
             this.displayMillsToolStripMenuItem.Name = "displayMillsToolStripMenuItem";
-            this.displayMillsToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.displayMillsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.displayMillsToolStripMenuItem.Text = "Display Mills";
             this.displayMillsToolStripMenuItem.Click += new System.EventHandler(this.displayMillsToolStripMenuItem_Click);
+            // 
+            // gameToolStripMenuItem
+            // 
+            this.gameToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.turnOnAIToolStripMenuItem,
+            this.turnOffAIToolStripMenuItem});
+            this.gameToolStripMenuItem.Name = "gameToolStripMenuItem";
+            this.gameToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
+            this.gameToolStripMenuItem.Text = "Game";
+            // 
+            // turnOnAIToolStripMenuItem
+            // 
+            this.turnOnAIToolStripMenuItem.Name = "turnOnAIToolStripMenuItem";
+            this.turnOnAIToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.turnOnAIToolStripMenuItem.Text = "Turn On AI";
+            this.turnOnAIToolStripMenuItem.Click += new System.EventHandler(this.turnOnAIToolStripMenuItem_Click);
             // 
             // button1
             // 
@@ -699,6 +721,19 @@
             this.p2Tokens.Text = "9";
             this.p2Tokens.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 250;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // turnOffAIToolStripMenuItem
+            // 
+            this.turnOffAIToolStripMenuItem.Name = "turnOffAIToolStripMenuItem";
+            this.turnOffAIToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.turnOffAIToolStripMenuItem.Text = "Turn Off AI";
+            this.turnOffAIToolStripMenuItem.Click += new System.EventHandler(this.turnOffAIToolStripMenuItem_Click);
+            // 
             // Board
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -814,6 +849,10 @@
         private System.Windows.Forms.TextBox p1Tokens;
         private System.Windows.Forms.TextBox p2Tokens;
         private System.Windows.Forms.ToolStripMenuItem displayMillsToolStripMenuItem;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.ToolStripMenuItem gameToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem turnOnAIToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem turnOffAIToolStripMenuItem;
     }
 }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -17,6 +18,10 @@ namespace nineMensMorris {
         bool select = true; //When true, select a piece to move, when false select the desitnation
         int delete = 0;
         Button selectedButton;
+        Random rand1 = new Random();
+        Random rand2 = new Random();
+        bool aiGame = false;
+        int aiPiece;
         int player1_tokens = 9;
         int player2_tokens = 9;
         int p1_currentTokens = 9;
@@ -136,6 +141,8 @@ namespace nineMensMorris {
             delete = 0;
             p1_currentTokens = 9;
             p2_currentTokens = 9;
+            aiGame = false;
+            turnOnAIToolStripMenuItem.Enabled = true;
 
             // Reset the counters for each player's token
             p1Tokens.Text = player1_tokens.ToString();
@@ -279,7 +286,6 @@ namespace nineMensMorris {
             if (turn) { test += 1; }
             else { test += 2; }
         }
-
         private void delete_piece(Button deleteButton, int head) {
             deleteButton.BackColor = Color.Khaki;
             deleteButton.Enabled = true;
@@ -341,6 +347,127 @@ namespace nineMensMorris {
             MessageBox.Show(test);
         }
 
+        private void aiPlacement() {
+            int piece = rand1.Next(1, 25);
+
+            while (boardArray[piece] == 1 || boardArray[piece] == 2) {
+                piece = rand1.Next(1, 25);
+            }
+
+            foreach (Control s in ActiveForm.Controls) {
+                Button c = s as Button;
+
+                if (c != null) {
+                    if (c.TabIndex == piece) {
+                        c.BackColor = Color.Aqua;
+                        boardArray[c.TabIndex] = 2;
+                        player2_tokens--;
+                        millDetection(c.TabIndex);
+                        p2Tokens.Text = player2_tokens.ToString();
+                        if (delete == 0) {
+                            textBox15.AppendText(Environment.NewLine);
+                            textBox15.AppendText("Player 1's Turn");
+                            turn = !turn;
+                            c.Enabled = false;
+                            checkPhase();
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void ai() {
+            if (aiGame) {
+                if (phase == true && turn == false && delete == 0) {
+                    int piece = rand1.Next(1, 25);
+
+                    while (boardArray[piece] == 1 || boardArray[piece] == 2) {
+                        piece = rand1.Next(1, 25);
+                    }
+
+                    foreach (Control s in ActiveForm.Controls) {
+                        Button c = s as Button;
+
+                        if (c != null) {
+                            if (c.TabIndex == piece) {
+                                c.PerformClick();
+                            }
+                        }
+                    }
+                }
+
+                if (delete == 2) {
+                    int piece = rand1.Next(1, 25); 
+
+                    while (boardArray[piece] != 1) {
+                        piece = rand1.Next(1, 25);
+                    }
+
+                    foreach (Control s in ActiveForm.Controls) {
+                        Button c = s as Button;
+
+                        if (c != null) {
+                            if (c.TabIndex == piece) {
+                                c.PerformClick();
+                            }
+                        }
+                    }
+                }
+
+                if (phase == false && turn == false && delete == 0 && select == true) {
+                    int piece = rand1.Next(1, 25);
+
+                    while (boardArray[piece] != 2) {
+                        piece = rand1.Next(1, 25);
+                    }
+
+
+                    aiPiece = piece;
+
+                    foreach (Control s in ActiveForm.Controls) {
+                        Button c = s as Button;
+
+                        if (c != null) {
+                            if (c.TabIndex == piece) {
+                                c.PerformClick();
+                            }
+                        }
+                    }
+
+                }
+
+                if (phase == false && turn == false && delete == 0 && select == false) {
+                    ArrayList adjacentPoints = new ArrayList();
+                    adjacentPoints.Clear();
+
+                    for (int i = 0; i < adjacency[aiPiece].Length; i++) {
+                        if (boardArray[adjacency[aiPiece][i]] == 0) {
+                            adjacentPoints.Add(adjacency[aiPiece][i]);
+                        }
+                    }
+
+                    adjacentPoints.Add(aiPiece);
+
+                    int random = rand1.Next(1, 25);
+
+                    while (adjacentPoints.Contains(random) != true) {
+                        random = rand1.Next(1, 25);
+                    }
+
+                    foreach (Control s in ActiveForm.Controls) {
+                        Button c = s as Button;
+
+                        if (c != null) {
+                            if (c.TabIndex == random) {
+                                c.PerformClick();
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
         private void button_click(object sender, EventArgs e) {
             if (delete == 0) {
                 // If player 1 selects an empty piece, then that index in boardArray becomes 1
@@ -358,6 +485,7 @@ namespace nineMensMorris {
                             textBox15.AppendText("Player 2's Turn");
                         }
                     }
+
                     else {
                         b.BackColor = Color.Aqua;
                         boardArray[b.TabIndex] = 2;
@@ -369,6 +497,7 @@ namespace nineMensMorris {
                             textBox15.AppendText("Player 1's Turn");
                         }
                     }
+
                     turn = !turn;
                     b.Enabled = false;
                     checkPhase();
@@ -452,6 +581,8 @@ namespace nineMensMorris {
                                             }
                                         }
 
+                                        aiGame = false;
+                                        turnOnAIToolStripMenuItem.Enabled = false;
                                         MessageBox.Show("Player 1 has won the game!");
                                         return;
                                     }
@@ -487,6 +618,8 @@ namespace nineMensMorris {
                                             }
                                         }
 
+                                        aiGame = false;
+                                        turnOnAIToolStripMenuItem.Enabled = false;
                                         MessageBox.Show("Player 2 has won the game!");
                                         return;
                                     }
@@ -578,6 +711,8 @@ namespace nineMensMorris {
                                                 }
                                             }
 
+                                            aiGame = false;
+                                            turnOnAIToolStripMenuItem.Enabled = false;
                                             MessageBox.Show("Player 1 has won the game!");
                                             return;
                                         }
@@ -612,6 +747,8 @@ namespace nineMensMorris {
                                                 }
                                             }
 
+                                            aiGame = false;
+                                            turnOnAIToolStripMenuItem.Enabled = false;
                                             MessageBox.Show("Player 2 has won the game!");
                                             return;
                                         }
@@ -667,6 +804,7 @@ namespace nineMensMorris {
                                             }
                                         }
                                     }
+
                                     delete = 0;
                                     p2_currentTokens--;
                                     
@@ -680,6 +818,8 @@ namespace nineMensMorris {
                                             }
                                         }
 
+                                        aiGame = false;
+                                        turnOnAIToolStripMenuItem.Enabled = false;
                                         MessageBox.Show("Player 1 has won the game!");
                                         return;
                                     }
@@ -720,6 +860,8 @@ namespace nineMensMorris {
                                         }
                                     }
 
+                                    aiGame = false;
+                                    turnOnAIToolStripMenuItem.Enabled = false;
                                     MessageBox.Show("Player 1 has won the game!");
                                     return;
                                 }
@@ -783,6 +925,8 @@ namespace nineMensMorris {
                                             }
                                         }
 
+                                        aiGame = false;
+                                        turnOnAIToolStripMenuItem.Enabled = false;
                                         MessageBox.Show("Player 2 has won the game!");
                                         return;
                                     }
@@ -822,7 +966,9 @@ namespace nineMensMorris {
                                         }
                                     }
 
-                                    MessageBox.Show("Player 2 has won the game!");
+                                    aiGame = false;
+                                    turnOnAIToolStripMenuItem.Enabled = false;
+                                   MessageBox.Show("Player 2 has won the game!");
                                     return;
                                 }
 
@@ -837,5 +983,17 @@ namespace nineMensMorris {
                     }
                 }
             }
+
+        private void timer1_Tick(object sender, EventArgs e) {
+            ai();
+        }
+
+        private void turnOnAIToolStripMenuItem_Click(object sender, EventArgs e) {
+            aiGame = true;
+        }
+
+        private void turnOffAIToolStripMenuItem_Click(object sender, EventArgs e) {
+            aiGame = false;
         }
     }
+}
