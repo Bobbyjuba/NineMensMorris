@@ -35,3 +35,13 @@ C:\Users\Owner\Documents\Programming\CSharp\NineMensMorris\nineMensMorris\nineMe
 C:\Users\Owner\Documents\Programming\CSharp\NineMensMorris\nineMensMorris\nineMensMorris\obj\Debug\nineMensMorris.csproj.GenerateResource.cache
 C:\Users\Owner\Documents\Programming\CSharp\NineMensMorris\nineMensMorris\nineMensMorris\obj\Debug\nineMensMorris.exe
 C:\Users\Owner\Documents\Programming\CSharp\NineMensMorris\nineMensMorris\nineMensMorris\obj\Debug\nineMensMorris.pdb
+C:\Users\Bobby\Source\Repos\Bobbyjuba\NineMensMorris\nineMensMorris\nineMensMorris\bin\Debug\nineMensMorris.exe.config
+C:\Users\Bobby\Source\Repos\Bobbyjuba\NineMensMorris\nineMensMorris\nineMensMorris\bin\Debug\nineMensMorris.exe
+C:\Users\Bobby\Source\Repos\Bobbyjuba\NineMensMorris\nineMensMorris\nineMensMorris\bin\Debug\nineMensMorris.pdb
+C:\Users\Bobby\Source\Repos\Bobbyjuba\NineMensMorris\nineMensMorris\nineMensMorris\obj\Debug\nineMensMorris.csprojAssemblyReference.cache
+C:\Users\Bobby\Source\Repos\Bobbyjuba\NineMensMorris\nineMensMorris\nineMensMorris\obj\Debug\nineMensMorris.Board.resources
+C:\Users\Bobby\Source\Repos\Bobbyjuba\NineMensMorris\nineMensMorris\nineMensMorris\obj\Debug\nineMensMorris.Properties.Resources.resources
+C:\Users\Bobby\Source\Repos\Bobbyjuba\NineMensMorris\nineMensMorris\nineMensMorris\obj\Debug\nineMensMorris.csproj.GenerateResource.cache
+C:\Users\Bobby\Source\Repos\Bobbyjuba\NineMensMorris\nineMensMorris\nineMensMorris\obj\Debug\nineMensMorris.csproj.CoreCompileInputs.cache
+C:\Users\Bobby\Source\Repos\Bobbyjuba\NineMensMorris\nineMensMorris\nineMensMorris\obj\Debug\nineMensMorris.exe
+C:\Users\Bobby\Source\Repos\Bobbyjuba\NineMensMorris\nineMensMorris\nineMensMorris\obj\Debug\nineMensMorris.pdb

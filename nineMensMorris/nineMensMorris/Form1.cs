@@ -299,6 +299,7 @@ namespace nineMensMorris {
                 turn = true;
                 textBox15.AppendText(Environment.NewLine);
                 textBox15.AppendText("Begining Phase 2, Movement");
+                textBox15.AppendText(Environment.NewLine);
                 textBox15.AppendText("Player 1's turn");
                 foreach (Control c in this.Controls) {
                     if (c is Button) {
